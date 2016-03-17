@@ -1,0 +1,33 @@
+class Solution {
+public:
+    /*vector<string> addOperators(string num, int target) {
+        vector<string> 
+    }*/
+    
+    
+    void dfsHelper(string num, int target,long long diff, long long curNum,string out,vector<string> &res){
+    //base case
+    if(num.size()==0&& curNum == target){
+        res.push_back(out);
+        return;
+    }
+    
+    for(int i=1;i<=num.size();i++){
+        string cur = num.substr(0,i);
+        if(cur.size()>1&&cur[0]=='0') return;
+        string next = num.substr(i);
+        if(out.size()>0){
+            dfsHelper(next,target,stoll(cur),curNum+stoll(cur),out+"+"+cur,res);
+            dfsHelper(next,target,-1*stoll(cur),curNum-stoll(cur),out+"-"+cur,res);
+            dfsHelper(next,target,stoll(cur)*diff,(curNum-diff)+stoll(cur)*diff,out+"*"+cur,res);
+        }else{
+            dfsHelper(next,target,stoll(cur),stoll(cur),cur,res);
+        }
+    }
+}
+vector<string> addOperators(string num, int target) {
+    vector<string>  res;
+    dfsHelper(num,target,0,0,"",res);
+    return res;
+}
+};
