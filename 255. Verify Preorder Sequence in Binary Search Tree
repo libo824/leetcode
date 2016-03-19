@@ -1,0 +1,18 @@
+//use stack to get the bigest min value
+//keep in mind that if you want to validate the post order, you should traverse fromt the end of the arry
+class Solution {
+public:
+    bool verifyPreorder(vector<int>& preorder) {
+        stack<int> stk;
+        int min = INT_MIN;
+        for(auto it: preorder){
+            if(it<min) return false;
+            while(!stk.empty()&&it>stk.top()){
+                min = stk.top();
+                stk.pop();
+            }
+            stk.push(it);
+        }
+        return true;
+    }
+};
