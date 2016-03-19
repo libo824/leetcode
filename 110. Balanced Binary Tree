@@ -1,0 +1,19 @@
+// you should return -1 when the substree doesn't satisfied the requirement, 
+// otherwise you have to caculate the heights of the subtree agian
+class Solution {
+private:
+    int getDepth(TreeNode* root){
+        if(!root) return 1;
+        int left = getDepth(root->left);
+        int right = getDepth(root->right);
+        if(left== -1 || right == -1 || abs(left-right)>1) return -1;
+        return max(left, right)+1;
+    }
+public:
+    bool isBalanced(TreeNode* root) {
+        if(!root) return true;
+        int left = getDepth(root->left);
+        int right = getDepth(root->right);
+        return left!=-1&&right!=-1&&abs(left-right)<=1;
+    }
+};
