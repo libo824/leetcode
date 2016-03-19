@@ -1,0 +1,72 @@
+class Solution {
+public:
+	vector<int> spiralOrder(vector<vector<int>>& matrix) {
+		vector<int> res;
+		int m = matrix.size();
+		if (m == 0) return res;
+		int n = matrix[0].size();
+		if (n == 0) return res;
+		int lBoarder = 0;
+		int rBoarder = n - 1;
+		int uBoarder = 0;
+		int dBoarder = m - 1;
+		int x = 0, y = 0;
+		//0 is move right, 1 is move down, 2 is move left,3 is move up
+		int flag = 0;
+		while (lBoarder <= rBoarder && uBoarder <= dBoarder) {
+			switch (flag) {
+			case 0: //move to right
+				while (x < rBoarder) {
+					res.push_back(matrix[y][x]);
+					x++;
+				}
+				if (x == rBoarder) {
+					res.push_back(matrix[y][x]);
+					flag = 1;
+					uBoarder++;
+					y++;
+				}
+				break;
+			case 1: //move down
+				while (y < dBoarder) {
+					res.push_back(matrix[y][x]);
+					y++;
+				}
+				if (y == dBoarder) {
+					res.push_back(matrix[y][x]);
+					flag = 2;
+					rBoarder--;
+					x--;
+				}
+				break;
+			case 2: //move left
+				while (x > lBoarder) {
+					res.push_back(matrix[y][x]);
+					x--;
+				}
+				if (x == lBoarder) {
+					res.push_back(matrix[y][x]);
+					flag = 3;
+					dBoarder--;
+					y--;
+				}
+				break;
+			case 3: //move up
+				while (y > uBoarder) {
+					res.push_back(matrix[y][x]);
+					y--;
+				}
+				if (y == uBoarder) {
+					res.push_back(matrix[y][x]);
+					flag = 0;
+					lBoarder++;
+					x++;
+				}
+				break;
+			default:
+				cout << "error" << endl;
+			}
+		}
+	return res;
+	}
+};
