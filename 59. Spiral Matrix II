@@ -1,0 +1,78 @@
+class Solution {
+public:
+    vector<vector<int>> generateMatrix(int n) {
+        vector<vector<int>> matrix(n,vector<int>(n));
+     
+		int lBoarder = 0;
+		int rBoarder = n - 1;
+		int uBoarder = 0;
+		int dBoarder = n - 1;
+		int x = 0, y = 0;
+		//0 is move right, 1 is move down, 2 is move left,3 is move up
+		int flag = 0;
+		int i =1;
+		while (lBoarder <= rBoarder && uBoarder <= dBoarder&& i<= n*n) {
+			switch (flag) {
+			case 0: //move to right
+				while (x < rBoarder) {
+					matrix[y][x] = i;
+					x++;
+					i++;
+				}
+				if (x == rBoarder) {
+					matrix[y][x] = i;
+					flag = 1;
+					uBoarder++;
+					y++;
+					i++;
+				}
+				break;
+			case 1: //move down
+				while (y < dBoarder) {
+					matrix[y][x] = i;
+					y++;
+					i++;
+				}
+				if (y == dBoarder) {
+					matrix[y][x] = i;
+					flag = 2;
+					rBoarder--;
+					x--;
+					i++;
+				}
+				break;
+			case 2: //move left
+				while (x > lBoarder) {
+				    matrix[y][x] = i;
+					x--;
+					i++;
+				}
+				if (x == lBoarder) {
+					matrix[y][x] = i;
+					flag = 3;
+					dBoarder--;
+					y--;
+					i++;
+				}
+				break;
+			case 3: //move up
+				while (y > uBoarder) {
+					matrix[y][x] = i;
+					y--;
+					i++;
+				}
+				if (y == uBoarder) {
+					matrix[y][x]=i;
+					flag = 0;
+					lBoarder++;
+					x++;
+					i++;
+				}
+				break;
+			default:
+				cout << "error" << endl;
+			}
+		}
+	return matrix;
+    }
+};
