@@ -1,0 +1,28 @@
+class Solution {
+public:
+    string convert(string s, int numRows) {
+        vector<string> m(numRows);
+        string res;
+        if(numRows == 1) return s;
+        bool up2Down = true;
+        int i=0, j=0;
+        int len = s.size();
+        while(i<len){
+            if(j<numRows-1&&up2Down){
+                m[j++].push_back(s[i++]);
+            }else if(j==numRows-1&&up2Down){
+                m[j--].push_back(s[i++]);
+                up2Down = false;
+            }else if(j>0 && !up2Down){
+                m[j--].push_back(s[i++]);
+            }else if(j==0 && !up2Down){
+                m[j++].push_back(s[i++]);
+                up2Down = true;
+            }
+        }
+       for(auto it:m){
+           res+=it;
+       } 
+       return res;
+    }
+};
