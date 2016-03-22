@@ -1,0 +1,31 @@
+// use bfs to find the min step, remember to remove the word in the list, because bfs could guarantee the previous step is the minmum step
+// please review the problem: wall and gate to check it
+class Solution {
+public:
+    int ladderLength(string beginWord, string endWord, unordered_set<string>& wordList) {
+        queue<string> q;
+        int step = 2;
+        q.push(beginWord);
+        while(!q.empty()){
+            int size = q.size();
+            for(int i=0;i<size;i++){
+                string str = q.front();
+                q.pop();
+                for(int j=0;j<str.size();j++){
+                    for(char letter = 'a';letter<='z';letter++){
+                        string newWord =str;
+                        newWord[j] = letter;
+                        if(endWord.compare(newWord) == 0)
+                            return step;
+                        else if(wordList.find(newWord)!=wordList.end()){
+                            q.push(newWord);
+                            wordList.erase(newWord);
+                        }
+                    }
+                }
+            }
+            step++;
+        }
+        return 0;
+    }
+};
