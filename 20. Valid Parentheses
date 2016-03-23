@@ -1,0 +1,37 @@
+//温故而知新，可以为师矣
+class Solution {
+public:
+    bool isValid(string s) {
+        stack<char> ms;
+        for(auto it: s){
+            switch(it){
+                case '(':
+                case '[':
+                case '{':
+                    ms.push(it);
+                    break;
+                case ')':{
+                    if(ms.empty()||ms.top()!='(')
+                        return false;
+                    ms.pop();
+                    break;
+                }
+                case ']':{
+                    if(ms.empty()||ms.top()!='[')
+                        return false;
+                    ms.pop();
+                    break;
+                }
+                case '}':{
+                    if(ms.empty()||ms.top()!='{')
+                        return false;
+                    ms.pop();
+                    break;
+                }
+                default:
+                  return false;
+            }
+        }
+        return ms.empty();
+    }
+};
