@@ -1,0 +1,26 @@
+//第一，如果当前数字是最后一个数字，或者之后的数字比它小的话，则加上当前数字
+//第二，其他情况则减去这个数字
+//解析的好精辟，哭晕在厕所
+class Solution {
+public:
+    int romanToInt(string s) {
+         int res = 0;
+         unordered_map<char,int> mp;
+         mp['M'] = 1000;
+         mp['D'] = 500;
+         mp['C'] = 100;
+         mp['L'] = 50;
+         mp['X'] = 10;
+         mp['V'] = 5;
+         mp['I'] = 1;
+        for(int i = 0;i<s.size();i++){
+            int val = mp[s[i]];
+            if(i==s.size()-1||val>=mp[s[i+1]]){
+                res+=val;
+            }else{
+                res-=val;
+            }
+        }
+    return res;
+    }
+};
