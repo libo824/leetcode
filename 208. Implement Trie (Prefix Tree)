@@ -1,0 +1,73 @@
+class TrieNode {
+public:
+    // Initialize your data structure here.
+    bool is_word;
+    char val;
+    TrieNode* children[26];
+    TrieNode(char val) {
+        this->val = val;
+        is_word = false;
+        memset(children,0,sizeof(children));
+    }
+    TrieNode() {
+        this->val = ' ';
+        is_word = false;
+        memset(children,0,sizeof(children));
+    }
+};
+
+class Trie {
+public:
+    Trie() {
+        root = new TrieNode();
+    }
+
+    // Inserts a word into the trie.
+    void insert(string word) {
+        TrieNode* node = root;
+        int length = word.length();
+        for(int i=0;i<length;i++){
+            int index = word[i]-'a';
+            if(!node->children[index]){
+                node->children[index] = new TrieNode(word[index]);
+            }
+            node = node->children[index];
+        }
+        node->is_word = true;
+    }
+
+    // Returns if the word is in the trie.
+    bool search(string word) {
+        TrieNode* node = root;
+        int length = word.length();
+        for(int i = 0;i<length;i++){
+            int index = word[i]-'a';
+            if(!node->children[index])
+                return false;
+            node = node->children[index];
+        }
+        return node->is_word;
+    }
+
+    // Returns if there is any word in the trie
+    // that starts with the given prefix.
+    bool startsWith(string prefix) {
+        TrieNode* node = root;
+        int length = prefix.length();
+        for(int i=0;i<length;i++){
+            int index = prefix[i]-'a';
+            if(!node->children[index])
+                return false;
+            node = node->children[index];
+        }
+        return true;
+    }
+
+private:
+    TrieNode* root;
+};
+
+// Your Trie object will be instantiated and called as such:
+// Trie trie;
+// trie.insert("somestring");
+// trie.search("key");
