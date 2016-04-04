@@ -1,0 +1,114 @@
+class Solution {
+    class Trie{
+    public:
+        class TrieNode {
+        public:
+            bool isWord;
+            bool found;
+            TrieNode* children[26];
+            TrieNode(){
+                isWord = false;
+                found = false;
+                memset(children,0, sizeof(children));
+            }
+        };
+        TrieNode* root;
+        Trie(){
+            root = new TrieNode();
+        }
+        ~Trie(){
+            
+        }
+        // Inserts a word into the trie.
+        void insert(string word) {
+            TrieNode* node = root;
+            int length = word.length();
+            for(int i=0;i<length;i++){
+                int index = word[i]-'a';
+                if(!node->children[index]){
+                    node->children[index] = new TrieNode();
+                }
+                node = node->children[index];
+            }
+            node->isWord = true;
+            node->found = false;
+        }
+        
+        // Returns if the word is in the trie.
+        bool search(string word) {
+            TrieNode* node = root;
+            int length = word.length();
+            for(int i = 0;i<length;i++){
+                int index = word[i]-'a';
+                if(!node->children[index])
+                    return false;
+                node = node->children[index];
+            }
+            if(node->isWord){
+                if(!node->found){
+                    node->found = true;
+                    return node->isWord;
+                }else{
+                    return false;
+                }
+            } 
+        }
+        
+        // Returns if there is any word in the trie
+        // that starts with the given prefix.
+        bool startsWith(string prefix) {
+            TrieNode* node = root;
+            int length = prefix.length();
+            for(int i=0;i<length;i++){
+                int index = prefix[i]-'a';
+                if(!node->children[index])
+                    return false;
+                node = node->children[index];
+            }
+            return true;
+        }
+    };
+private:
+    Trie myTrie;
+    int m,n;
+    int xDir[4]={0,1,0,-1};
+    int yDir[4]={1,0,-1,0};
+    void exist(vector<vector<char>>& board, vector<vector<bool>>& visited, string& str,vector<string>& res,int x,int y){
+        
+        str.push_back(board[x][y]);
+        visited[x][y] = true;
+        if(myTrie.search(str))
+            res.push_back(str);
+        
+            for(int i =0;i<4;i++){
+                int newX=x+xDir[i];
+                int newY=y+yDir[i];
+                if (shouldExist(board,visited,newX,newY)&&myTrie.startsWith(str)) {
+                    exist(board,visited,str,res,newX,newY);
+                }
+        }
+        str.pop_back();
+        visited[x][y]=false;
+    }
+    bool shouldExist(vector<vector<char>>& board, vector<vector<bool>>& visited ,int x,int y){
+        if(x>=0 && y>=0 && x<m && y<n && !visited[x][y]) return true;
+        else return false;
+    }
+public:
+    vector<string> findWords(vector<vector<char>>& board, vector<string>& words) {
+        m = board.size();
+        n = board[0].size();
+        vector<string> res;
+        vector<vector<bool>> visited(m,vector<bool>(n,false));
+        for(int k = 0;k<words.size();k++){
+            myTrie.insert(words[k]);
+        }
+        string str;
+        for(int i = 0;i<m;i++){
+            for(int j = 0;j<n;j++){
+                exist(board,visited,str,res,i,j);
+            }
+        }
+        return res;
+    }
+};
