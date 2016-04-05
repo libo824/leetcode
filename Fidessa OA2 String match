@@ -1,0 +1,41 @@
+int matchPos(string s){
+    stack<char> sta;
+    int pos= -1;
+    for(int i=0;i<s.size();i++){
+        if(s[i]>='A'&&s[i]<='Z'){
+            sta.push(s[i]);
+        }else if(s[i]>='a'&&s[i]<='z'){
+            if(!sta.empty()){
+                char ch = sta.top();
+                sta.pop();
+                if(s[i]!= ch-'A'+'a')
+                    return sta.empty()?pos:-1;
+                else
+                    pos = sta.empty()? i: pos;
+            }else{
+                return pos;
+            }
+        }else{
+            return sta.empty()?pos:-1;
+        }
+    }
+    return pos;
+}
+int main()
+{
+    string str = "AaBbCc";
+    cout<<"AaBbCc match pos is:"<< matchPos(str)<<endl;
+    str = "AaBbC";
+    cout<<"AaBbC match pos is:"<< matchPos(str)<<endl;
+    str = "ABCcba";
+    cout<<"ABCcba match pos is:"<< matchPos(str)<<endl;
+    str = "aBbCca";
+    cout<<"aBbCca match pos is:"<< matchPos(str)<<endl;
+    str = "AaBCca";
+    cout<<"AaBCca match pos is:"<< matchPos(str)<<endl;
+    str = "ABCcbd";
+    cout<<"ABCcbd match pos is:"<< matchPos(str)<<endl;
+    str = "ABbac";
+    cout<<"ABbac match pos is:"<< matchPos(str)<<endl;
+    return 0;
+}
