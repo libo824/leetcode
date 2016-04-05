@@ -1,0 +1,27 @@
+struct ListNode{
+    string color;
+    ListNode* next;
+    ListNode(string val){
+        color = val;
+        next = nullptr;
+    }
+};
+ListNode* mergeSortedList(ListNode* l1, ListNode* l2){
+    unordered_map<string, int> mp;
+    mp["red"] = 1;
+    mp["blue"] = 2;
+    mp["green"] = 3;
+    mp["yellow"] = 4;
+    if(l1 == nullptr)
+        return l2;
+    else if(l2 == nullptr)
+        return l1;
+    else if(mp[l1->color]<=mp[l2->color]){
+        l1->next = mergeSortedList(l1->next, l2);
+        return l1;
+    }
+    else{
+        l2->next = mergeSortedList(l1, l2->next);
+        return l2;
+    }
+}
