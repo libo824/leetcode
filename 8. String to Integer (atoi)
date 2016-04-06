@@ -1,0 +1,31 @@
+//1.处理最开始的空格
+//2.处理＋ 和－号
+//3.当超过INT_MAX或者小于INT_MIN的时候直接输出
+class Solution {
+public:
+    int myAtoi(string str) {
+        long res = 0;
+        int sign = 1;
+        bool start = false;
+        for(int i = 0;i<str.size();i++){
+            if(str[i] == ' ' && !start) continue;
+            else if(!start && str[i] == '+'){
+                sign = 1;
+                start = true;
+            }
+            else if(!start && str[i] == '-'){
+                sign = -1;
+                start = true;
+            }else if(str[i]>='0' && str[i]<='9'){
+                start = true;
+                res = res*10 + str[i]-'0';
+                if(res*sign >=INT_MAX)
+                    return INT_MAX;
+                else if(res*sign<=INT_MIN)
+                    return INT_MIN;
+            }else
+                break;
+        }
+        return int(res*sign);
+    }
+};
