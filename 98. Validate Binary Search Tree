@@ -1,0 +1,25 @@
+//use iteratively method to inorder tranversal the tree
+class Solution {
+public:
+    bool isValidBST(TreeNode* root) {
+        stack<TreeNode*> stk;
+        TreeNode* node = root;
+        TreeNode* pre = nullptr;
+        while(node || !stk.empty()){
+            if(node){
+                stk.push(node);
+                node = node->left;
+            }else{
+                TreeNode* temp = stk.top();
+                stk.pop();
+                if(!pre) 
+                    pre = temp;
+                else if(pre->val>=temp->val) 
+                    return false;
+                node = temp->right;
+                pre = temp;
+            }
+        }
+        return true;
+    }
+};
