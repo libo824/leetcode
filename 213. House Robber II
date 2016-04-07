@@ -1,0 +1,39 @@
+//my solution
+class Solution {
+public:
+    int rob(vector<int>& nums) {
+        return max(rob(nums,0),rob(nums,1));
+    }
+private:
+    int rob(vector<int>& nums, int offset){
+        int size = nums.size();
+        if(size<=1){
+            return size==0?0:nums[0];
+        }
+        if(offset==0){
+            if(size == 2) return nums[0];
+            int prepre = nums[0];
+            int pre = max(nums[0],nums[1]);
+            int cur = 0;
+            for(int i = 2;i<size-1;i++){
+                cur = max(pre,prepre+nums[i]);
+                prepre = pre;
+                pre = cur;
+            }
+            return pre;
+        }
+        if(offset == 1){
+            if(size == 2) return nums[1];
+            int prepre = nums[1];
+            int pre = max(nums[1],nums[2]);
+            int cur = 0;
+            for(int i = 3;i<size;i++){
+                cur = max(pre,prepre+nums[i]);
+                prepre = pre;
+                pre = cur;
+            }
+            return pre;
+            
+        }
+    }
+};
