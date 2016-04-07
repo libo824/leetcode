@@ -1,5 +1,5 @@
 // you should return -1 when the substree doesn't satisfied the requirement, 
-// otherwise you have to caculate the heights of the subtree agian
+// otherwise you have to caculate the heights of the subtree again
 class Solution {
 private:
     int getDepth(TreeNode* root){
