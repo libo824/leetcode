@@ -1,0 +1,41 @@
+// this is my solution
+class Solution {
+public:
+    int rob(vector<int>& nums) {
+        int pre1 = 0, pre2 = 0,pre3 = 0;
+        int n = nums.size();
+        if(n==0) return 0;
+        if(n==1) return nums[0];
+        if(n==2) return max(nums[0],nums[1]);
+        if(n==3) return max(nums[0]+nums[2],nums[1]);
+        pre1 = nums[2]+nums[0];
+        pre2 = nums[1];
+        pre3 = nums[0];
+        int cur = 0;
+        for(int i = 3;i<n;i++){
+            cur = nums[i] + max(pre2,pre3);
+            pre3 = pre2;
+            pre2 = pre1;
+            pre1 = cur;
+        }
+        return max(pre2,pre1);
+    }
+};
+// web niuer's solution
+
+class Solution {
+public:
+    int rob(vector<int>& nums) {
+        if(nums.size()<=1)
+            return nums.size()==0? 0: nums[0];
+        int prepre = nums[0];
+        int pre = max(nums[0],nums[1]);
+        int cur = 0;
+        for(int i=2;i<nums.size();i++){
+            cur = max(pre,prepre+nums[i]);
+            prepre = pre;
+            pre = cur;
+        }
+        return pre;
+    }
+};
