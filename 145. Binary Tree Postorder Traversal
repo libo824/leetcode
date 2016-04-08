@@ -1,0 +1,27 @@
+// pay attention to the assignment of lastnodevisited pos
+class Solution {
+public:
+    vector<int> postorderTraversal(TreeNode* root) {
+        vector<int> res;
+        stack<TreeNode*> stk;
+        TreeNode* node = root;
+        TreeNode* lastVisited = nullptr;
+        while(node|| !stk.empty()){
+            if(node){
+                stk.push(node);
+                node = node->left;
+            }else{
+                TreeNode* temp = stk.top();
+                if(temp->right && temp->right !=lastVisited){
+                    node = temp->right;
+                }else{
+                    res.push_back(temp->val);
+                    stk.pop();
+                    // assign last node visited should be here
+                    lastVisited = temp;
+                }
+            }
+        }
+        return res;
+    }
+};
