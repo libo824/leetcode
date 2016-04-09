@@ -1,0 +1,31 @@
+//remember the previous result
+class Solution {
+public:
+    int countNodes(TreeNode* root) {
+        
+        return countNodes(root,-1,-1);
+    }
+private:
+    int countNodes(TreeNode* root, int left,int right){
+        if(!root) return 0;
+        int lNum=1,rNum = 1;
+        if(left== -1){
+            TreeNode* node = root->left;
+            while(node){
+                node = node->left;
+                lNum++;
+            }
+        }else
+            lNum = left;
+        if(right == -1){
+            TreeNode* node = root->right;
+            while(node){
+                node = node->right;
+                rNum++;
+            }
+        }else
+            rNum = right;
+        if(lNum == rNum) return (1<<lNum)-1;
+        else return countNodes(root->left,lNum-1,-1)+countNodes(root->right,-1,rNum-1)+1;
+    }
+};
