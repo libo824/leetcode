@@ -1,0 +1,23 @@
+class Solution {
+public:
+    void flatten(TreeNode* root) {
+        stack<TreeNode*> stk;
+        TreeNode* node = root;
+        TreeNode* parent = root;
+        while(node||!stk.empty()){
+            if(node){
+                if(node->right)
+                    stk.push(node->right);
+                node->right = node->left;
+                node->left = nullptr;
+                parent = node;
+                node = node->right;
+            }else{
+                TreeNode* temp = stk.top();
+                stk.pop();
+                parent->right = temp;
+                node = temp;
+            }
+        }
+    }
+};
