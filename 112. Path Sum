@@ -1,0 +1,14 @@
+class Solution {
+public:
+    bool hasPathSum(TreeNode* root, int sum) {
+        if(!root) return false;
+        return sumNumbers(root,0,sum);
+    }
+    bool sumNumbers(TreeNode* root, int val,int& sum){
+        if(!root) return false;
+        if(!root->left && !root->right && sum == val+root->val){
+            return true;
+        }
+        return sumNumbers(root->left,val+root->val,sum)||sumNumbers(root->right,val+root->val,sum);
+    }
+};
